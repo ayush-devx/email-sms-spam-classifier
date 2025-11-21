@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            background: url("{{ url_for('static', filename='bg.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            padding-top: 10%;
+        }
+        form {
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+            display: inline-block;
+            padding: 30px 40px;
+            border-radius: 15px;
+        }
+        input, button {
+            margin: 8px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        a.oauth-btn {
+            display: inline-block;
+            margin: 8px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+        }
+        .google { background: #db4437; }
+    .github { background: #333; }
+    .register-link { color: yellow; }
+    </style>
+</head>
+<body>
+    <h2>🔐 Login</h2>
+    <form method="POST">
+        <input type="email" name="email" placeholder="Email" required><br>
+        <input type="password" name="password" placeholder="Password" required><br>
+        <button type="submit">Login</button><br>
+    </form>
+    <p>New user? <a href="{{ url_for('register') }}" class="register-link">Register</a></p>
+</body>
+</html>
