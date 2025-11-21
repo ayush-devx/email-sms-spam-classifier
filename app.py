@@ -35,7 +35,6 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-
 # ----------- LOAD MODEL -----------
 base_path = os.path.dirname(os.path.abspath(__file__))
 vectorizer = None
@@ -44,7 +43,6 @@ try:
     with open(os.path.join(base_path, "vectorizer.pkl"), "rb") as f:
         vectorizer = pickle.load(f)
 except FileNotFoundError:
-    # vectorizer missing; app will still start but prediction will fail with a helpful message
     vectorizer = None
 
 try:
@@ -70,7 +68,7 @@ def transform_text(text):
 @app.route("/")
 @login_required
 def home():
-    return render_template("home.html", username=current_user.email)
+    return render_template("index.html", username=current_user.email)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -119,7 +117,7 @@ def predict():
     if input_sms == "":
         flash("⚠️ Please enter a message.")
         return redirect(url_for("home"))
-    # Check model and vectorizer presence
+
     if model is None or vectorizer is None:
         flash("⚠️ Model or vectorizer not found. Please run the training script.", "error")
         return redirect(url_for("home"))
@@ -135,12 +133,9 @@ def predict():
     except NotFittedError:
         flash("⚠️ Model not fitted. Check your model file.", "error")
     except Exception as e:
-        # Catch-all for unexpected errors during prediction
         flash(f"An error occurred during prediction: {e}", "error")
 
     return redirect(url_for("home"))
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
